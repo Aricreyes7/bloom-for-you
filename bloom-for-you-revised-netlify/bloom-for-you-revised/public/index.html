@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#140b23"><title>Bloom For You 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    min-height:100vh;
+    overflow:hidden;
+    color:white;
+
+    background:linear-gradient(
+        -45deg,
+        #140b23,
+        #2d1243,
+        #5d1f60,
+        #1e1836
+    );
+
+    background-size:400% 400%;
+    animation:bgMove 15s ease infinite;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* Background particles */
+
+.particles{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.particles span{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:rgba(255,255,255,.7);
+    border-radius:50%;
+    animation:floatParticle linear infinite;
+}
+
+@keyframes floatParticle{
+    from{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+    20%{
+        opacity:.8;
+    }
+    to{
+        transform:translateY(-120vh);
+        opacity:0;
+    }
+}
+
+/* Login Screen */
+
+#loginScreen{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    z-index:10;
+}
+
+.login-box{
+    width:420px;
+    padding:50px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(25px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:32px;
+
+    text-align:center;
+
+    box-shadow:
+    0 30px 70px rgba(0,0,0,.4),
+    0 0 50px rgba(255,120,190,.15);
+
+    transition:.4s;
+}
+
+.login-box:hover{
+    transform:translateY(-6px);
+}
+
+.login-box h1{
+    font-size:2rem;
+    margin-bottom:12px;
+
+    background:linear-gradient(
+        90deg,
+        #ffd8eb,
+        #ff8cc8
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.login-box p{
+    color:#ddd;
+    margin-bottom:25px;
+    font-size:14px;
+}
+
+.login-box input{
+    width:100%;
+    padding:16px;
+    margin:10px 0;
+
+    border-radius:14px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+    font-size:15px;
+}
+
+.login-box input::placeholder{
+    color:#ddd;
+}
+
+.login-box input:focus{
+    outline:none;
+    border-color:#ff9fcf;
+
+    box-shadow:
+    0 0 20px rgba(255,140,200,.35);
+}
+
+.login-box button{
+    width:100%;
+    padding:16px;
+    margin-top:18px;
+
+    border:none;
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff5fa7,
+        #d66dff
+    );
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:15px;
+    font-weight:600;
+
+    transition:.35s;
+}
+
+.login-box button:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 15px 30px rgba(255,105,180,.4);
+}
+
+#error{
+    margin-top:15px;
+    color:#ffbfdc;
+    font-size:13px;
+}
+
+/* Flower Screen */
+
+#flowerScreen{
+    display:none;
+
+    position:relative;
+
+    height:100vh;
+    width:100%;
+
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+}
+
+/* Glow */
+
+.flower-glow{
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,120,200,.25),
+        transparent 70%
+    );
+
+    filter:blur(40px);
+
+    animation:pulse 4s infinite ease-in-out;
+}
+
+@keyframes pulse{
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.2);
+    }
+}
+
+#flowerScreen h1{
+    font-size:clamp(30px,5vw,50px);
+    margin-bottom:10px;
+
+    opacity:0;
+
+    color:#ffe5f2;
+
+    text-shadow:
+    0 0 20px rgba(255,130,210,.55);
+
+    animation:fadeIn 2s ease 3.4s forwards;
+}
+
+.subtitle{
+    opacity:0;
+
+    color:#f6dceb;
+    text-align:center;
+
+    animation:fadeIn 2s ease 4.2s forwards;
+}
+
+@keyframes fadeIn{
+    to{
+        opacity:1;
+    }
+}
+
+/* Flower */
+
+.garden{
+    position:relative;
+    width:320px;
+    height:420px;
+}
+
+/* Stem */
+
+.stem{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%) scaleY(0);
+
+    top:170px;
+
+    width:10px;
+    height:200px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #17632e,
+        #72ef75,
+        #17632e
+    );
+
+    border-radius:20px;
+
+    transform-origin:top;
+
+    animation:growStem 2s ease forwards;
+}
+
+@keyframes growStem{
+    to{
+        transform:
+        translateX(-50%)
+        scaleY(1);
+    }
+}
+
+/* Leaves */
+
+.leaf{
+    position:absolute;
+
+    width:75px;
+    height:35px;
+
+    background:
+    linear-gradient(
+        45deg,
+        #1d7f41,
+        #84f0a1
+    );
+
+    border-radius:
+    100% 0 100% 0;
+
+    opacity:0;
+
+    animation:showLeaf 1s ease 2s forwards;
+}
+
+.leaf.left{
+    top:250px;
+    left:92px;
+    transform:rotate(15deg);
+}
+
+.leaf.right{
+    top:295px;
+    right:92px;
+    transform:rotate(190deg);
+}
+
+@keyframes showLeaf{
+    to{
+        opacity:1;
+    }
+}
+
+/* Flower Head */
+
+.flower{
+    position:absolute;
+
+    top:45px;
+    left:50%;
+
+    width:220px;
+    height:220px;
+
+    transform:translateX(-50%) scale(0);
+
+    filter:
+    drop-shadow(
+        0 0 35px
+        rgba(255,120,190,.5)
+    );
+
+    animation:bloom 2s cubic-bezier(.2,.8,.3,1.2) 1.5s forwards;
+}
+
+@keyframes bloom{
+    0%{
+        transform:
+        translateX(-50%)
+        scale(0)
+        rotate(-30deg);
+    }
+
+    70%{
+        transform:
+        translateX(-50%)
+        scale(1.15)
+        rotate(8deg);
+    }
+
+    100%{
+        transform:
+        translateX(-50%)
+        scale(1)
+        rotate(0);
+    }
+}
+
+.petal{
+    position:absolute;
+
+    width:85px;
+    height:125px;
+
+    left:67px;
+    top:-8px;
+
+    border-radius:50%;
+
+    transform-origin:50% 95%;
+
+    background:
+    linear-gradient(
+        to bottom,
+        #fff8bb,
+        #ff9ccf,
+        #df3f8e
+    );
+
+    box-shadow:
+    0 0 18px rgba(255,140,200,.35);
+}
+
+.petal:nth-child(1){transform:rotate(0deg);}
+.petal:nth-child(2){transform:rotate(45deg);}
+.petal:nth-child(3){transform:rotate(90deg);}
+.petal:nth-child(4){transform:rotate(135deg);}
+.petal:nth-child(5){transform:rotate(180deg);}
+.petal:nth-child(6){transform:rotate(225deg);}
+.petal:nth-child(7){transform:rotate(270deg);}
+.petal:nth-child(8){transform:rotate(315deg);}
+
+.center{
+    position:absolute;
+
+    width:54px;
+    height:54px;
+
+    top:82px;
+    left:83px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        #fff7ae,
+        #ffbb2f,
+        #9f5b0f
+    );
+
+    box-shadow:
+    0 0 35px #ffd66f;
+}
+
+/* Floating hearts */
+
+.heart{
+    position:absolute;
+    bottom:-30px;
+
+    color:#ff9ccc;
+
+    opacity:0;
+
+    animation:heartFloat linear forwards;
+}
+
+@keyframes heartFloat{
+    10%{
+        opacity:.8;
+    }
+
+    100%{
+        transform:
+        translateY(-110vh)
+        rotate(360deg);
+
+        opacity:0;
+    }
+}
+
+@media(max-width:480px){
+
+    .login-box{
+        width:92%;
+        padding:35px;
+    }
+
+    .garden{
+        transform:scale(.9);
+    }
+}
+
+#status{min-height:20px;margin-top:14px;color:#ffbfdc;font-size:13px}
+.login-box input:focus-visible,.login-box button:focus-visible,.replay-button:focus-visible{outline:2px solid #ffd8eb;outline-offset:3px}
+.login-box button:disabled{opacity:.7;cursor:wait}
+#flowerScreen{padding:24px 16px;text-align:center}
+#flowerScreen .subtitle{max-width:560px;line-height:1.7;padding:0 12px}
+.replay-button{margin-top:18px;padding:12px 22px;border:1px solid #ffffff45;border-radius:999px;color:#fff;background:#ffffff12;cursor:pointer;font:500 14px 'Poppins',sans-serif;opacity:0;animation:fadeIn 1.5s ease 5s forwards}
+.replay-button:hover{background:#ffffff25;transform:translateY(-2px)}
+@media(max-width:480px){#flowerScreen h1{font-size:clamp(25px,8vw,36px)}.garden{transform:scale(.82);transform-origin:center top;margin-bottom:-55px}.login-box{width:92%;padding:34px 25px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="particles" id="particles" aria-hidden="true"></div>
+<main id="loginScreen">
+  <section class="login-box">
+    <h1>🌷 A Little Surprise</h1>
+    <p>Enter your details to reveal something beautiful.</p>
+    <form id="loginForm">
+      <input type="text" id="username" name="username" placeholder="Enter username" autocomplete="username" maxlength="80" required aria-label="Username">
+      <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="current-password" maxlength="200" required aria-label="Password">
+      <button id="loginButton" type="submit">Open My Surprise ❤️</button>
+      <div id="status" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+</main>
+<section id="flowerScreen" aria-live="polite"></section>
+<script>
+const particles=document.getElementById("particles");
+for(let i=0;i<60;i++){
+ const p=document.createElement("span");p.style.left=Math.random()*100+"%";
+ p.style.animationDuration=10+Math.random()*20+"s";p.style.animationDelay=Math.random()*10+"s";particles.appendChild(p);
+}
+const form=document.getElementById("loginForm"),button=document.getElementById("loginButton"),statusBox=document.getElementById("status");
+form.addEventListener("submit",async e=>{
+ e.preventDefault();button.disabled=true;button.textContent="Opening...";statusBox.textContent="";
+ try{
+  const login=await fetch("/.netlify/functions/login",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:document.getElementById("username").value.trim(),password:document.getElementById("password").value})});
+  if(!login.ok){if(login.status===401)throw Error("Incorrect username or password. Try again.");throw Error("Unable to open your surprise. Please try again later.");}
+  const reveal=await fetch("/.netlify/functions/flower",{credentials:"same-origin",cache:"no-store"});
+  if(!reveal.ok)throw Error("Your session could not be verified. Please log in again.");
+  const markup=await reveal.text(),screen=document.getElementById("loginScreen");
+  screen.style.transition="opacity .65s ease,transform .65s ease";screen.style.opacity="0";screen.style.transform="scale(.96)";
+  setTimeout(()=>{screen.style.display="none";const flower=document.getElementById("flowerScreen");flower.innerHTML=markup;flower.style.display="flex";flower.style.alignItems="center";flower.style.justifyContent="center";flower.style.flexDirection="column";startHearts();},650);
+ }catch(err){statusBox.textContent=err.message||"Something went wrong.";button.disabled=false;button.textContent="Open My Surprise ❤️";}
+});
+function startHearts(){setInterval(()=>{const target=document.getElementById("flowerScreen");if(!target||target.style.display==="none")return;const h=document.createElement("div");h.className="heart";h.textContent="♥";h.style.left=Math.random()*100+"vw";h.style.fontSize=16+Math.random()*24+"px";h.style.animationDuration=5+Math.random()*5+"s";target.appendChild(h);setTimeout(()=>h.remove(),10000);},500);}
+async function replayFlower(){const target=document.getElementById("flowerScreen");try{const r=await fetch("/.netlify/functions/flower",{credentials:"same-origin",cache:"no-store"});if(!r.ok)throw Error("Session expired. Please refresh and log in again.");target.innerHTML=await r.text();}catch(e){target.textContent=e.message;}}
+</script>
+</body></html>
